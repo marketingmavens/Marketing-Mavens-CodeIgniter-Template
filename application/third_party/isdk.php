@@ -223,11 +223,16 @@ public function getDownloadUrl($fileID) {
 /////////////////////////////////////////////////////////
 ////////////////////CONTACT SERVICE////////////////////// /////////////////////////////////////////////////////////
 ###public function to add contacts to Infusion - Returns Contact ID###
-public function addCon($cMap, $optReason = "") {
+/***
+ * @param array $contact_map
+ * @param string $optReason
+ * @return int Contact Id
+ */
+public function addCon($contact_map, $optReason = "") {
 
     $carray = array(
                     php_xmlrpc_encode($this->key),
-                    php_xmlrpc_encode($cMap,array('auto_dates')));
+                    php_xmlrpc_encode($contact_map,array('auto_dates')));
     $conID = $this->methodCaller("ContactService.add",$carray);
     if (!empty($cMap['Email'])) {
       if ($optReason == "") { $this->optIn($cMap['Email']); } else { $this->optIn($cMap['Email'],$optReason); }
