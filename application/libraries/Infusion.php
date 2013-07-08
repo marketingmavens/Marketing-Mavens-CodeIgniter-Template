@@ -9,6 +9,23 @@ class Infusion extends iSDK {
   var $app = 'appname';
   var $debug = 'on';
 
+
+  var $contact_fields = array(
+    'Id', 'FirstName', 'LastName', 'Company', 'Email', 'Phone1', 'LastUpdated',
+    'StreetAddress1', 'StreetAddress2', 'City', 'PostalCode', 'State', 'Country',
+    'Address2Street1', 'Address2Street2', 'City2', 'PostalCode2', 'State2', 'Country2',
+    'Password', 'Groups',
+  );
+  var $lead_fields = array(
+    'Id','ContactID','OpportunityTitle','StageID','EstimatedCloseDate','Objection',
+  );
+
+  var $productinterest_fields = array(
+    'Id','ObjectId','ObjType','ProductId','ProductType','Qty','DiscountPercent'
+  );
+
+
+
   /***
    * Connect to Infusionsoft Application
    */
@@ -66,6 +83,32 @@ class Infusion extends iSDK {
       endif;
     }
     return $obj;
+  }
+
+  private function array_to_object($data)
+  {
+    return json_decode (json_encode ($data), FALSE);
+  }
+
+
+  function get($table,$query,$force_all = FALSE)
+  {
+    $page = 0;
+    $fields = strtolower($table) . '_fields';
+    $data = array();
+    $finished = FALSE;
+    while(!$finished):
+      $results = $this->dsQuery($table,1000,$page++,$query,$this->$fields);
+      if(!is_array($results)) return FALSE;
+      $data = array_merge($data,$results);
+      if(sizeof($results) < 1000) $finished = TRUE;;
+    endwhile;
+
+    if(sizeof($data) == 1 && $force_all != TRUE)
+      return $this->array_to_object($data[0]);
+
+    return $this->array_to_object($data);
+
   }
 
 

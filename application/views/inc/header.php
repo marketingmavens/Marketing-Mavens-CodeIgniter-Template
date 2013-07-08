@@ -16,6 +16,14 @@
   <link type="text/css" rel="stylesheet" href="<?=base_url()?>css/bootstrap.min.css" />
   <link type="text/css" rel="stylesheet" href="<?=base_url()?>css/flick/jquery-ui-1.10.2.min.css" />
   <link type="text/css" rel="stylesheet" href="<?=base_url()?>css/style.css" />
+
+  <script src="<?=base_url()?>js/jquery-1.9.1.min.js"></script>
+  <script src="<?=base_url()?>js/jquery-ui-1.10.2.min.js"></script>
+  <script src="<?=base_url()?>js/bootstrap.min.js"></script>
+  <script src="<?=base_url()?>js/ajax.js"></script>
+  <script src="<?=base_url()?>js/scripts.js"></script>
+
+
 </head>
 
 <body class="<?php echo _e($class) ?>">
@@ -25,12 +33,8 @@
   <header>
 
     <div class="masthead">
-      <ul class="nav nav-pills pull-right">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-      <h3 class="muted">USA Gymnastics</h3>
+
+      <h3 class="muted">App</h3>
 
     </div> <!-- /.masterhead -->
 
