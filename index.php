@@ -18,7 +18,12 @@
  * NOTE: If you change these, also change the error_reporting() code below
  *
  */
+if($_SERVER['SERVER_ADDR'] == '127.0.0.1')
 	define('ENVIRONMENT', 'development');
+elseif($_SERVER['SERVER_ADDR'] == '174.120.235.236')
+  define('ENVIRONMENT', 'testing');
+else
+  define('ENVIRONMENT', 'production');
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING

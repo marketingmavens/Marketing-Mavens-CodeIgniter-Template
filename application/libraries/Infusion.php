@@ -1,6 +1,6 @@
 <?php
 
-require(FCPATH . APPPATH . 'third_party/isdk.php');
+require(FCPATH . APPPATH . 'third_party/infusionsoft/isdk.php');
 
 class Infusion extends iSDK {
 
@@ -31,9 +31,7 @@ class Infusion extends iSDK {
    */
   public function __construct()
   {
-    $this->client = new xmlrpc_client("https://{$this->app}.infusionsoft.com/api/xmlrpc");
-    $this->client->return_type = 'phpvals';
-    $this->client->setSSLVerifyPeer(FALSE);
+    $this->cfgCon($this->app,$this->key);
   }
 
   /***
@@ -43,11 +41,7 @@ class Infusion extends iSDK {
    */
   public function connect($app,$key)
   {
-    $this->app = $app;
-    $this->key = $key;
-    $this->client = new xmlrpc_client("https://{$this->app}.infusionsoft.com/api/xmlrpc");
-    $this->client->return_type = 'phpvals';
-    $this->client->setSSLVerifyPeer(FALSE);
+    $this->cfgCon($app,$key);
   }
 
   /***
