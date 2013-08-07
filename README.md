@@ -48,11 +48,11 @@ and right click and select 'Mark as Plain Text'
 Files to Update for each project
 --------------------------------
 
-/index.php (Might not need to do anything here)
+    /index.php (Might not need to do anything here)
 * Line 21 - 31 depending on ip of testing and development IP's
 
 
-/application/config/config.php
+    /application/config/config.php
 
 * Line 17 - 28 update base_url to be correct based on ENVIRONMENT
 
