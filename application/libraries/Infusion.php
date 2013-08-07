@@ -5,24 +5,10 @@ require(FCPATH . APPPATH . 'third_party/infusionsoft/isdk.php');
 class Infusion extends iSDK {
 
   var $client;
-  var $key = '111';
-  var $app = 'appname';
+  var $key = 'API_KEY';
+  var $app = 'INFUSION_APP_NAME';
   var $debug = 'on';
 
-
-  var $contact_fields = array(
-    'Id', 'FirstName', 'LastName', 'Company', 'Email', 'Phone1', 'LastUpdated',
-    'StreetAddress1', 'StreetAddress2', 'City', 'PostalCode', 'State', 'Country',
-    'Address2Street1', 'Address2Street2', 'City2', 'PostalCode2', 'State2', 'Country2',
-    'Password', 'Groups',
-  );
-  var $lead_fields = array(
-    'Id','ContactID','OpportunityTitle','StageID','EstimatedCloseDate','Objection',
-  );
-
-  var $productinterest_fields = array(
-    'Id','ObjectId','ObjType','ProductId','ProductType','Qty','DiscountPercent'
-  );
 
 
 
@@ -44,40 +30,12 @@ class Infusion extends iSDK {
     $this->cfgCon($app,$key);
   }
 
-  /***
-   * Private Function for converting Array into objects.
-   * For multi dimensional arrays, it will take the Id
-   * of the element and use it as the key for the object
-   *
-   * Ex:
-   * stdClass Object
-   * (
-   *    id_4 => stdClass Object
-   *      (
-   *        [Email] => abc.com
-   *      )
-   * )
-   *
-   * @param $array
-   * @return stdClass
-   */
 
-  private function to_object($array) {
-    $obj = new stdClass();
-    foreach ($array as $key => $val) {
-      if(is_array($val)):
-        if(isset($val['Id'])):
-          $id = 'id_' . $val['Id'];
-        else :
-          $id = '_' . $key;
-        endif;
-        $obj->$id = $this->to_object($val);
-      else :
-        $obj->$key = $val;
-      endif;
-    }
-    return $obj;
-  }
+
+  /***
+   * @param array $data
+   * @return array|object mixed
+   */
 
   private function array_to_object($data)
   {
@@ -85,7 +43,17 @@ class Infusion extends iSDK {
   }
 
 
-  function get($table,$query,$force_all = FALSE)
+  /***
+   *
+   * Default Search for data from Infusionsoft
+   *
+   * @param string $table
+   * @param array $query
+   * @param bool $force_all
+   * @return array|bool|object
+   */
+
+  function get($table = 'Contact',$query = array(),$force_all = FALSE)
   {
     $page = 0;
     $data = array();
@@ -105,7 +73,16 @@ class Infusion extends iSDK {
   }
 
 
-  function get_order_by($table,$query,$order_by,$asc = TRUE,$force_all = FALSE)
+  /***
+   * @param string $table
+   * @param array $query
+   * @param string $order_by
+   * @param bool $asc
+   * @param bool $force_all
+   * @return array|bool|object
+   */
+
+  function get_order_by($table = 'Contact',$query = array(),$order_by = 'Id',$asc = TRUE,$force_all = FALSE)
   {
     $page = 0;
     $data = array();
@@ -126,20 +103,91 @@ class Infusion extends iSDK {
 
 
 
+  /***
+   *
+   * Pass either array or contact Id
+   *
+   * Searches for Contact returns the first
+   * one if it finds more then one
+   *
+   * @param int|array $query
+   * @return bool|mixed|object
+   */
 
-
-
-
-
-
-
-
-
-
-
-  private function custom_fields($type = -1,$list = TRUE)
+  function get_contact($query)
   {
-    $fields = $this->dsQuery('DataFormField',200,0,array('FormId' => $type),array('Name','Label'));
+    if(is_array($query)):
+      $results = $this->get('Contact',$query);
+      if(is_object($results))
+        return $results;
+      elseif(is_array($results))
+        return $results[0];
+      else
+        return FALSE;
+    elseif(is_int($query)) :
+      $results = $this->loadCon($query,$this->fields('Contact'));
+      if(is_array($results))
+        return array_to_object($results);
+    endif;
+    return FALSE;
+  }
+
+
+
+
+
+
+
+
+  /***
+   *
+   * Get All the custom fields for a
+   * particular field / table type
+   *
+   * @param string $type
+   * @param bool $list
+   * @return array|bool
+   */
+
+
+  private function custom_fields($type = 'Contact',$list = TRUE)
+  {
+
+    switch($type){
+      case 'Contact':
+        $form_id = -1;
+        break;
+      case 'Affiliate':
+      case 'Referral Partner':
+        $form_id = -3;
+        break;
+      case 'Opportunity':
+      case 'Lead':
+        $form_id = -4;
+        break;
+      case 'Task':
+      case 'Note':
+      case 'Apt':
+      case 'Appointment':
+        $form_id = -5;
+        break;
+      case 'Company':
+        $form_id = -6;
+        break;
+      case 'Order':
+        $form_id = -9;
+        break;
+      default :
+        $form_id = -1;
+        break;
+    }
+
+
+    $fields = $this->dsQuery('DataFormField',200,0,array('FormId' => $form_id),array('Name','Label'));
+
+    if(!is_array($fields)):
+      return FALSE;
+    endif;
 
     if($list === TRUE):
       $list = array();
@@ -148,8 +196,6 @@ class Infusion extends iSDK {
       endforeach;
       return $list;
     endif;
-
-
 
     return $fields;
   }
@@ -1096,6 +1142,11 @@ class Infusion extends iSDK {
 
       );
       break;
+
+      default :
+        $fields = array(
+          'Id'
+        );
  	  }
 
 
