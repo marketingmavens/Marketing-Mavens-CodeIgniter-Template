@@ -1,5 +1,7 @@
-Marketing Mavens Codeigniter Template
+Marketing Mavens CodeIgniter Template
 =====================================
+
+CodeIgniter 2.1.4
 
 Includes Basic Infusionsoft Library
 
