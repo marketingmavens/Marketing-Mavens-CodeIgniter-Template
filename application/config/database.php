@@ -52,7 +52,7 @@ if(ENVIRONMENT == 'development')
 {
   $db['default']['username'] = 'root';
   $db['default']['password'] = 'root';
-  $db['default']['database'] = 'database_name';
+  $db['default']['database'] = 'db_name';
 }
 elseif(ENVIRONMENT == 'testing')
 {

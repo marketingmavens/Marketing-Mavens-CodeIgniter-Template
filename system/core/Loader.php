@@ -412,7 +412,7 @@ class CI_Loader {
 	 * @param	string
 	 * @param	object|array $vars
 	 * @param	bool
-	 * @return	void
+	 * @return	string|void
 	 */
 	public function view($view, $vars = array(), $return = FALSE)
 	{

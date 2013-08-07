@@ -18,15 +18,7 @@ class Home extends CI_Controller {
     //endif;
 
 
-    $this->header = new stdClass();
     $this->data = new stdClass();
-    $this->footer = new stdClass();
-
-
-    /***
-     * Models to load
-     */
-
 
 
 

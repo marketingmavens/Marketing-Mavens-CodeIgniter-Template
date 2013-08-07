@@ -1,12 +1,12 @@
 function get_url()
 {
   var domain = document.domain;
-  if(domain == 'body.dev'){
+  if(domain == 'sites.dev'){
     return '/';
   }else if(domain == 'mavenswebsites.com') {
-    return '/clients/getyourbodyback/';
+    return '/clients/';
   }else {
-    return '/registration/';
+    return '/';
   }
 
 }
