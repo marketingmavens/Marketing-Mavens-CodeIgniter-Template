@@ -9,18 +9,7 @@ class Home extends CI_Controller {
   {
     parent::__construct();
 
-    /**
-     * Check Login
-     */
-    //if(!isset($this->session->userdata['customer_id'])):
-      //$this->session->set_userdata('message',3);
-      //redirect('/login');
-    //endif;
-
-
     $this->data = new stdClass();
-
-
 
   }
 
@@ -33,6 +22,7 @@ class Home extends CI_Controller {
 		$this->load->view('inc/header',$this->data);
     $this->load->view('pages/home_page');
     $this->load->view('inc/footer');
+
 	}
 }
 
