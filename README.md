@@ -19,12 +19,12 @@ basic database model called db_model with basic functions
 Blank or template standard files
 --------------------------------
 
-  /application/view/inc/header.php
-  /application/view/inc/footer.php
-  /application/view/pages/home_page.php
-  /js/scripts.js
-  /js/ajax.js
-  /css/style.css
+    /application/view/inc/header.php
+    /application/view/inc/footer.php
+    /application/view/pages/home_page.php
+    /js/scripts.js
+    /js/ajax.js
+    /css/style.css
 
 
 
@@ -38,9 +38,9 @@ but you'll need to mark the following files as Plain
 Text in PHPSTORM. This is done by locating the files
 and right click and select 'Mark as Plain Text'
 
-  /system/core/Controller.php
-  /system/core/Controller.php
-  /system/database/DB_active_rec.php
+    /system/core/Controller.php
+    /system/core/Controller.php
+    /system/database/DB_active_rec.php
 
 
 
