@@ -55,7 +55,6 @@ Files to Update for each project
 
 
     /application/config/config.php
-
 * Line 17 - 28 update base_url to be correct based on ENVIRONMENT
 
 
