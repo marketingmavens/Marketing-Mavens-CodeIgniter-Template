@@ -35,14 +35,14 @@ PhpStorm Settings
 -----------------
 
 This includes files for PhpStorm code auto complete
-for CodeIgniter. All located in CI_code_completion,
+for CodeIgniter. All located in CI_code_completion folder,
 if you don't use PhpStorm you can remove these and
 you don't need this files on the live/production server.
 
 
-If you use PhpStorm you'll need to mark the following files as Plain
-Text in PhpStorm. This is done by locating the files
-and right click and select 'Mark as Plain Text'
+If you use PhpStorm you'll need to mark the following
+files as Plain Text in PhpStorm. This is done by locating
+the files and right click and select 'Mark as Plain Text'
 
     /system/core/Controller.php
     /system/core/Controller.php
