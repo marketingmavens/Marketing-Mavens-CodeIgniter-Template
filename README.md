@@ -49,7 +49,7 @@ files as Plain Text in PhpStorm. This is done by locating
 the files and right click and select 'Mark as Plain Text'
 
     /system/core/Controller.php
-    /system/core/Controller.php
+    /system/core/Model.php
     /system/database/DB_active_rec.php
 
 
