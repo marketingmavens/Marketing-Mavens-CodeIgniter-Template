@@ -3,7 +3,11 @@ Marketing Mavens CodeIgniter Template
 
 CodeIgniter 2.1.4
 
-Includes Basic Infusionsoft Library
+Includes:
+
+Infusionsoft iSDK
+
+Infusion Library (iSDK Extension)
 
 Twitter Bootstrap 3.0
 
