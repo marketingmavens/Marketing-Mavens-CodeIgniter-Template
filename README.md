@@ -34,10 +34,14 @@ Blank or template standard files
 PhpStorm Settings
 -----------------
 
-This includes files for PHPSTORM code auto complete
-for codeigniter, don't need this files on the server
-but you'll need to mark the following files as Plain
-Text in PHPSTORM. This is done by locating the files
+This includes files for PhpStorm code auto complete
+for CodeIgniter. All located in CI_code_completion,
+if you don't use PhpStorm you can remove these and
+you don't need this files on the live/production server.
+
+
+If you use PhpStorm you'll need to mark the following files as Plain
+Text in PhpStorm. This is done by locating the files
 and right click and select 'Mark as Plain Text'
 
     /system/core/Controller.php
@@ -51,7 +55,7 @@ Files to Update for each project
 --------------------------------
 
     /index.php (Might not need to do anything here)
-    Line 21 - 31 depending on the testing and development IP's
+    Line 21 - 31 depending on the testing and development IPs
 
     /application/config/config.php
     Line 17 - 28 update base_url to be correct based on ENVIRONMENT
