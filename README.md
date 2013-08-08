@@ -55,10 +55,13 @@ Files to Update for each project
 --------------------------------
 
     /index.php (Might not need to do anything here)
-    Line 21 - 31 depending on the testing and development IPs
+    Lines 21 - 31 depending on the testing and development IPs
 
     /application/config/config.php
-    Line 17 - 28 update base_url to be correct based on ENVIRONMENT
+    Lines 17 - 28 update base_url to be correct based on ENVIRONMENT
+
+    /application/config/database.php
+    Lines 51 - 67 update based on ENVIRONMENT settings
 
 
 If you have any questions contact me at dustin@marketingmavens.com
