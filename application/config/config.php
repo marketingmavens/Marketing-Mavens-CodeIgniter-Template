@@ -20,11 +20,11 @@ if(ENVIRONMENT == 'development')
 }
 elseif(ENVIRONMENT == 'testing')
 {
-  $config['base_url']	= 'http://mavenswebsites.com/clients/something';
+  $config['base_url']	= 'http://mavenswebsites.com/clients/something/';
 }
 else
 {
-  $config['base_url']	= 'https://somedomain.com';
+  $config['base_url']	= 'http://somedomain.com/';
 }
 
 /*
