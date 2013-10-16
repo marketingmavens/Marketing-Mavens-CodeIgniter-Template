@@ -1029,7 +1029,14 @@
 		*/
 		function setSSLVerifyHost($i)
 		{
-			$this->verifyhost = $i;
+      $version = explode('.', phpversion());
+      $minor = (int)$version[1];
+      if($minor > 2){
+        $this->verifyhost = 2;
+      }else {
+        $this->verifyhost = $i;
+      }
+
 		}
 
 		/**
@@ -1610,7 +1617,7 @@
 				// set key file (shall we catch errors in case CURLOPT_SSLKEY undefined ?)
 				if($key)
 				{
-					curl_setopt($curl, CURLOPT_SSLKEY, $key);
+					//curl_setopt($curl, CURLOPT_SSLKEY, $key);
 				}
 				// set key password (shall we catch errors in case CURLOPT_SSLKEY undefined ?)
 				if($keypass)
@@ -1618,6 +1625,7 @@
 					curl_setopt($curl, CURLOPT_SSLKEYPASSWD, $keypass);
 				}
 				// whether to verify cert's common name (CN); 0 for no, 1 to verify that it exists, and 2 to verify that it matches the hostname used
+        $this->setSSLVerifyHost(0);
 				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, $this->verifyhost);
 			}
 

@@ -109,3 +109,115 @@ function sort_array ($array, $key, $direction = 'ASC', $type = 'arr') {
   return $ret;
 
 }
+
+/***
+ *
+ * Gets the number of months between two dates
+ *
+ * @param $start_date
+ * @param $end_date
+ * @return int
+ */
+function get_months_between($start_date,$end_date)
+{
+  return (int)abs((strtotime($start_date) - strtotime($end_date))/(60*60*24*30));
+}
+
+
+
+
+/***
+ * @param string $key_format
+ * @param string $value_format
+ * @param bool $include_select_one
+ * @return array
+ */
+function month_list($key_format = 'm',$value_format = 'F',$include_select_one = TRUE)
+{
+  if($include_select_one == FALSE):
+    $months = array();
+  else :
+    $months = array('' => 'Please Select One');
+  endif;
+
+  for($i = 1; $i < 13; $i++):
+    $month_str = mktime(0,0,0,$i);
+    $months[date($key_format,$month_str)] = date($value_format,$month_str);
+  endfor;
+
+  return $months;
+
+}
+
+
+/***
+ * @param $start int
+ * @param $end int
+ * @param bool $include_select_one
+ * @return array
+ */
+
+function year_list($start,$end,$include_select_one = TRUE)
+{
+  if($include_select_one == FALSE):
+    $list = array();
+  else :
+    $list = array('' => 'Please Select One');
+  endif;
+
+  while($start <= $end):
+    $list[$start] = $start;
+    $start++;
+  endwhile;
+  return $list;
+}
+
+
+/***
+ * Converts a normal string to what could be a formatted
+ * permalink, removes strange characters, and replaces spaces
+ * with hyphens, and lower cases the word
+ *
+ * @param $string string
+ * @return mixed string
+ */
+
+function str_to_permalink($string)
+{
+  $string = strtolower($string);
+  $string = str_replace(' ','-',$string);
+  $string = str_replace('---','-',$string);
+  $string = str_replace('--','-',$string);
+  $string = str_replace(array(',',"'",'"','!','@','#','$','%','^','&','*','(',')'),'',$string);
+  return $string;
+}
+
+/***
+ * @param $url
+ * @param array $data
+ * @param bool $result
+ * @return bool|mixed
+ */
+
+function execute_curl($url, $data = array(), $result = FALSE)
+{
+  $agent = "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US;rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13";
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+  curl_setopt($ch, CURLOPT_URL, $url);
+  curl_setopt($ch, CURLOPT_HEADER, 0);
+  curl_setopt($ch, CURLOPT_USERAGENT, $agent);
+  curl_setopt($ch, CURLOPT_POST, TRUE);
+  curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+  $output = curl_exec($ch);
+
+  if($result) {
+    return $output;
+  }
+  curl_close($ch);
+
+  return TRUE;
+
+}

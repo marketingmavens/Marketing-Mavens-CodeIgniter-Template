@@ -133,6 +133,127 @@ class Infusion extends iSDK {
   }
 
 
+  /***
+   *
+   * Pass contact Id and it will look up
+   * all custom fields and contact fields
+   * and return an object or all data
+   *
+   * @param $contact_id
+   * @param bool $return_just_object
+   * @return array|object
+   */
+
+  function get_all_contact_information($contact_id,$return_just_object = FALSE)
+  {
+    $data = array();
+
+    /**
+     * Get Contact Fields and Data
+     */
+    $custom_fields = $this->custom_fields();
+    $contact_fields = $this->fields('Contact');
+    $fields = array_merge($contact_fields,$custom_fields);
+
+    if($return_just_object == TRUE):
+      return $this->array_to_object($this->loadCon($contact_id,$fields));
+    endif;
+
+
+    $data['contact'] = $this->loadCon($contact_id,$fields);
+
+    return $this->array_to_object($data);
+  }
+
+
+  /***
+   *
+   * Gets data from Infusionsoft and returns array
+   * for a list, with the key and value as defined
+   *
+   * @param string $table
+   * @param array $query
+   * @param string $order_by
+   * @param string $name
+   * @param string $key
+   * @param bool $asc
+   * @return array
+   */
+  function get_list($table,$query,$order_by = 'Id',$name = '',$key = 'Id',$asc = TRUE)
+  {
+    $results = $this->get_order_by($table,$query,$order_by,$asc,TRUE);
+    if($results == FALSE) return array();
+
+    $list = array();
+    foreach($results as $r):
+      $list[$r->$key] = $r->$name;
+    endforeach;
+
+    return $list;
+
+  }
+
+
+  /***
+   *
+   * Gets the most recent item
+   * in the results and returns object
+   *
+   * @param string $table
+   * @param array $query
+   * @param string $order_by
+   * @return bool|object
+   */
+  function get_most_recent($table,$query,$order_by)
+  {
+    $r = $this->get_order_by($table,$query,$order_by,FALSE);
+    if(is_array($r)):
+      return $r[0];
+    elseif(is_object($r)):
+      return $r;
+    endif;
+
+    return FALSE;
+  }
+
+
+
+
+
+  /***
+   * @param $contact_id
+   * @param $user_id
+   * @param string $title
+   * @param $notes
+   * @param string $action_type
+   * @param int $created_by
+   * @return int
+   */
+
+  function create_task($contact_id,$user_id,$title = '',$notes,$action_type = 'Other',$created_by = 0)
+  {
+    $data = array(
+      'ContactId' => $contact_id,
+      'CreatedBy' => $created_by,
+      'Accepted' => 1,
+      'Priority' => 2,
+      'CreationDate' => date('Ymd\TH:i:s'),
+      'ActionDate' => date('Ymd\TH:i:s'),
+      'UserId' => $user_id,
+      'IsAppointment' => 0,
+      'ActionType' => $action_type,
+      'ActionDescription' => $title,
+      'CreationNotes' => $notes,
+      'PopupDate' => date('Ymd\TH:i:s')
+    );
+
+    $task_id = $this->dsAdd('ContactAction',$data);
+    return $task_id;
+  }
+
+
+
+
 
 
 

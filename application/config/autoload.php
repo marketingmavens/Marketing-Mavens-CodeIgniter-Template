@@ -56,7 +56,7 @@ $autoload['libraries'] = array(
   'database',
   'session',
   'encrypt',
-  'infusion'
+  //'infusion'
 );
 
 

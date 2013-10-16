@@ -1,10 +1,66 @@
 <IfModule mod_rewrite.c>
-  DirectoryIndex index.php
-  RewriteEngine on
-  Options +FollowSymLinks
 
+  RewriteEngine On
+  RewriteBase /
+
+
+  #### Force SSL on live SSL websites
+  #RewriteCond %{HTTPS} !=on
+  #RewriteCond %{HTTP_HOST} =websitedomain.com [OR]
+  #RewriteCond %{HTTP_HOST} =anotherdomain.com
+  #RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  ### Enforce NO www
+  #RewriteCond %{HTTP_HOST} ^www.websitedomain.com$ [NC]
+  #RewriteRule ^(.*)$ https://websitedomain.com/$1 [R=301,L]
+
+
+  ### Removes trailing slashes (prevents SEO duplicate content issues)
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{HTTP_HOST} =sites.dev
+  RewriteRule ^(.+)/$ codeigniter-template/$1 [L,R=301] #Replace codeigniter-template with your directory if it's not the root
+
+  #RewriteCond %{REQUEST_FILENAME} !-d
+  #RewriteCond %{HTTP_HOST} =websitedomain.com [OR]
+  #RewriteCond %{HTTP_HOST} =anotherdomain.com
+  #RewriteRule ^(.+)/$ /$1 [L,R=301]
+
+
+  ## Developing domains
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteCond $1 !^(index\.php|img|fonts|css|js\.txt|favicon\.ico)
-  RewriteRule ^(.*)$ ./index.php?/$1 [L,QSA]
+  RewriteCond %{HTTP_HOST} =sites.dev
+  RewriteRule ^(.*)$ /codeigniter-template/index.php/$1 [L]
+
+  ## Developing domains
+  RewriteCond %{HTTP_HOST} =developmentdomain.dev
+  RewriteRule ^$ /codeigniter-template/index.php [L]
+
+  ## Live domains
+  #RewriteCond %{REQUEST_FILENAME} !-f
+  #RewriteCond %{REQUEST_FILENAME} !-d
+  #RewriteCond %{HTTP_HOST} =websitedomain.com [OR]
+  #RewriteCond %{HTTP_HOST} =anotherdomain.com
+  #RewriteRule ^(.*)$ /index.php/$1 [L]
+
+  ## Live domains
+  #RewriteCond %{HTTP_HOST} =websitedomain.com [OR]
+  #RewriteCond %{HTTP_HOST} =anotherdomain.com
+  #RewriteRule ^$ /index.php [L]
+
+
+  ###Default Settings, remove if you domain conditions for different directories
+  #RewriteCond %{REQUEST_FILENAME} !-f
+  #RewriteCond %{REQUEST_FILENAME} !-d
+  #RewriteRule ^(.*)$ /index.php/$1 [L]
+
+  #RewriteRule ^$ /index.php [L]
+
+</IfModule>
+
+<IfModule !mod_rewrite.c>
+
+  # Without mod_rewrite, route 404's to the front controller
+  ErrorDocument 404 /index.php
+
 </IfModule>
