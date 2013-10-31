@@ -60,7 +60,7 @@ class iSDK {
 
     /* SSL Certificate Verification */
     $this->client->setSSLVerifyPeer(TRUE);
-    $this->client->setCaCertificate(__DIR__ . '/infusionsoft.pem');
+    $this->client->setCaCertificate(FCPATH . APPPATH . 'third_party/infusionsoft/infusionsoft.pem');
     //$this->client->setDebug(2);
 
     $this->encKey = php_xmlrpc_encode($this->key);
