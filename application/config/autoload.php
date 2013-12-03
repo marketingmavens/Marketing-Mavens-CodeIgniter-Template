@@ -122,7 +122,7 @@ $autoload['language'] = array();
 */
 
 $autoload['model'] = array(
-  'Db_model'
+  'db_model'
 );
 
 
